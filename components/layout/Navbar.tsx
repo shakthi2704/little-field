@@ -25,7 +25,7 @@ const desktopMenuLinks = [
     { label: 'Terms of Use', href: '/terms' },
 ]
 
-export function Navbar({ topOffset = 0 }: { topOffset?: number }) {
+export function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false)
     const pathname = usePathname()
     const scrolled = useScrollPosition(80)
@@ -48,98 +48,95 @@ export function Navbar({ topOffset = 0 }: { topOffset?: number }) {
         <>
             <nav
                 className={cn(
-                    `fixed left-0 w-full z-50 transition-all duration-500 `,
-                    isTransparent
-                        ? 'bg-transparent'
-                        : 'bg-black/20 backdrop-blur-md'
-                )} style={{ top: topOffset }}
+                    'fixed top-0 left-0 w-full z-50 transition-all duration-500',
+                    isTransparent ? 'bg-transparent' : 'bg-black/20 backdrop-blur-md'
+                )}
             >
+                {/* max-w-7xl container — same as Footer */}
                 <div
                     className={cn(
-
-                        'max-w-7xl mx-auto px-16 grid grid-cols-[1fr_auto_1fr] items-center gap-6 transition-all duration-500',
-                        scrolled ? 'py-4' : 'py-6'
-
+                        'relative max-w-7xl mx-auto px-8 transition-all duration-500',
+                        scrolled ? 'h-14' : 'h-[120px]'
                     )}
-
                 >
-                    {/* ── LEFT ─────────────────────────────────────────────── */}
-                    <div className="flex items-center gap-8">
+                    <div className='flex items-center justify-between h-full'>
+                        {/* LEFT SIDE */}
+                        <div className="flex items-center">
 
-                        {/* Hamburger + desktop dropdown */}
-                        <div className="relative" ref={menuRef}>
-                            <button
-                                onClick={() => setMenuOpen(!menuOpen)}
-                                aria-label="Open menu"
-                                className="flex flex-col gap-[5px] transition-opacity duration-300 hover:opacity-50"
+                            {/* Hamburger */}
+                            <div className="relative shrink-0" ref={menuRef}>
+                                <button
+                                    onClick={() => setMenuOpen(!menuOpen)}
+                                    aria-label="Open menu"
+                                    className="flex flex-col gap-[5px] transition-opacity duration-300 hover:opacity-50 mr-8"
+                                >
+                                    <span className="block w-5 h-px bg-white" />
+                                    <span className="block w-5 h-px bg-white" />
+                                    <span className="block w-3 h-px bg-white" />
+                                </button>
+
+                                {menuOpen && (
+                                    <div className="hidden md:block absolute top-full left-0 mt-3 w-52 bg-black/70 backdrop-blur-md z-[60]">
+                                        {desktopMenuLinks.map((link) => (
+                                            <Link
+                                                key={link.label}
+                                                href={link.href}
+                                                onClick={() => setMenuOpen(false)}
+                                                className="block px-6 py-4 label-caps text-white/70 hover:text-white hover:bg-white/5 transition-all duration-200 border-b border-white/10 last:border-none"
+                                            >
+                                                {link.label}
+                                            </Link>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* Left Links */}
+                            <div className="hidden md:flex items-center gap-20">
+                                {leftLinks.map((link) => (
+                                    <NavLink
+                                        key={link.href}
+                                        href={link.href}
+                                        label={link.label}
+                                        active={pathname === link.href}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* RIGHT SIDE */}
+                        <div className="flex items-center">
+
+                            <div className="hidden md:flex items-center gap-20">
+                                {rightLinks.map((link) => (
+                                    <NavLink
+                                        key={link.href}
+                                        href={link.href}
+                                        label={link.label}
+                                        active={pathname === link.href}
+                                    />
+                                ))}
+                            </div>
+
+                            <Link
+                                href="/visit#inquire"
+                                className="hidden md:block label-caps px-5 py-2.5 border border-white/60 text-white hover:bg-white/10 transition-all duration-300 ml-8"
                             >
-                                <span className="block w-5 h-px bg-white" />
-                                <span className="block w-5 h-px bg-white" />
-                                <span className="block w-3 h-px bg-white" />
-                            </button>
-
-                            {/* Desktop dropdown — anchored under hamburger */}
-                            {menuOpen && (
-                                <div className="hidden md:block absolute top-full left-0 mt-3 w-52 bg-black/70 backdrop-blur-md z-[60]">
-                                    {desktopMenuLinks.map((link) => (
-                                        <Link
-                                            key={link.label}
-                                            href={link.href}
-                                            onClick={() => setMenuOpen(false)}
-                                            className="block px-6 py-4 label-caps text-white/70 hover:text-white hover:bg-white/5 transition-all duration-200 border-b border-white/10 last:border-none"
-                                        >
-                                            {link.label}
-                                        </Link>
-                                    ))}
-                                </div>
-                            )}
+                                Inquire
+                            </Link>
                         </div>
-
-                        {/* Left nav links — desktop only */}
-                        <div className="hidden md:flex items-center gap-8">
-                            {leftLinks.map((link) => (
-                                <NavLink
-                                    key={link.href}
-                                    href={link.href}
-                                    label={link.label}
-                                    active={pathname === link.href}
-                                />
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* ── CENTER: Logo ──────────────────────────────────────── */}
-                    <Link
-                        href="/"
-                        className="font-serif text-xl md:text-2xl tracking-[0.25em] uppercase whitespace-nowrap text-white"
-                    >
-                        Little Field
-                    </Link>
-
-                    {/* ── RIGHT ────────────────────────────────────────────── */}
-                    <div className="flex items-center justify-end gap-8">
-
-                        {/* Right nav links — desktop only */}
-                        <div className="hidden md:flex items-center gap-8">
-                            {rightLinks.map((link) => (
-                                <NavLink
-                                    key={link.href}
-                                    href={link.href}
-                                    label={link.label}
-                                    active={pathname === link.href}
-                                />
-                            ))}
-                        </div>
-
-                        {/* INQUIRE — desktop only */}
                         <Link
-                            href="/visit#inquire"
-                            className="hidden md:block label-caps px-6 py-3 border border-white/60 text-white hover:bg-white/10 transition-all duration-300"
+                            href="/"
+                            className={cn(
+                                'absolute left-1/2 -translate-x-1/2 font-serif uppercase whitespace-nowrap text-white tracking-[0.25em] transition-all duration-500',
+                                scrolled
+                                    ? 'top-1/2 -translate-y-1/2 text-xl'
+                                    : 'top-1/2 -translate-y-1/2 text-2xl'
+                            )}
                         >
-                            Inquire
+                            Little Field
                         </Link>
                     </div>
-                    {/* Open Today — 4th column */}
 
                 </div>
             </nav>

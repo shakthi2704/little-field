@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react'
 import Link from 'next/link'
 
-export function Hero() {
+export function Hero({ hoursText }: { hoursText?: string }) {
     const bgRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
@@ -31,8 +31,26 @@ export function Hero() {
             {/* Dark overlay */}
             <div className="absolute inset-0 bg-black/45" />
 
+            {/* Open Today — aligned to max-w-7xl container, same as navbar */}
+            {hoursText && (
+                <div className="absolute top-0 left-0 right-0 z-20 h-[40px] pointer-events-none">
+                    <div className="max-w-7xl mx-auto px-8 h-full flex items-center justify-end">
+                        <div className="flex items-center gap-2 pointer-events-auto">
+                            <span className="w-1.5 h-1.5 rounded-full bg-green-400 shrink-0" />
+                            <Link
+                                href="/visit"
+                                className="text-white/80 hover:text-white transition-colors duration-300 uppercase whitespace-nowrap"
+                                style={{ fontFamily: 'var(--font-lato)', fontSize: '11px', letterSpacing: '0.15em' }}
+                            >
+                                Open Today {hoursText}
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {/* Center content */}
-            <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
+            <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6 -mt-8">
 
                 {/* Eyebrow */}
                 <p
@@ -44,7 +62,7 @@ export function Hero() {
 
                 {/* Main heading */}
                 <h1
-                    className="text-white text-6xl md:text-8xl lg:text-[7rem] font-light leading-none tracking-wide mb-6"
+                    className="text-white text-5xl md:text-7xl lg:text-8xl font-light leading-none tracking-[0.15em] mb-6"
                     style={{ fontFamily: 'var(--font-cormorant)' }}
                 >
                     LITTLE FIELD

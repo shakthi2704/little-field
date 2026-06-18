@@ -35,8 +35,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${cormorant.variable} ${lato.variable} scroll-smooth`}>
-      <body className="bg-[#f9f9f9] text-[#1b1b1b] antialiased overflow-x-hidden">
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${cormorant.variable} ${lato.variable} scroll-smooth bg-[#f9f9f9] text-[#1b1b1b] antialiased overflow-x-hidden`}>
         {children}
       </body>
     </html>

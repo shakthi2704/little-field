@@ -59,7 +59,7 @@ const platformIcons: Record<string, React.FC> = {
 export function Footer({ settings }: FooterProps) {
     return (
         <footer className="bg-[#f9f9f9] border-t border-black/8">
-            <div className="max-w-[1440px] mx-auto px-10 py-24">
+            <div className="max-w-7xl mx-auto px-8 py-24">
                 <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr_1fr] gap-16 mb-20">
 
                     {/* Brand column */}
