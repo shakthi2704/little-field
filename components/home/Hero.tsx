@@ -24,7 +24,7 @@ export function Hero({ hoursText }: { hoursText?: string }) {
                 ref={bgRef}
                 className="absolute inset-0 scale-110 bg-cover bg-center bg-no-repeat"
                 style={{
-                    backgroundImage: `url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1800&q=80')`,
+                    backgroundImage: "url('/hero/banner-01.jpg')"
                 }}
             />
 
